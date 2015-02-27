@@ -18,8 +18,8 @@
 class SBMessenger; // forward declaration
 
 /**
- * Simple Dispatcher Base.
- * Interface for distribute Simple message incoming form messenger to devices.
+ * Simple Bee Dispatcher base class.
+ * Interface for distribute Simple Bee message incoming from messenger to devices.
  */
 class SBDispatcherBase {
 protected:
