@@ -1,6 +1,18 @@
+/*
+ * Copyright (C) 2015 Orange
+ *
+ * This software is distributed under the terms and conditions of the 'Apache-2.0'
+ * license which can be found in the file 'LICENSE.txt' in this package distribution
+ * or at 'http://www.apache.org/licenses/LICENSE-2.0'.
+ */
 
-#ifndef SBMessenger_h
-#define SBMessenger_h
+/* Device for SimpleBee Protocol
+ *
+ * Version:     0.1.0
+ * Created:     2015-02-24 by Franck Roudet
+ */
+#ifndef SBMESSENGER_H_
+#define SBMESSENGER_H_
 
 #include <inttypes.h>
 #if ARDUINO >= 100
@@ -9,14 +21,20 @@
 #include <WProgram.h> 
 #endif
 
-//#include "Stream.h"
+
+#ifndef STREAMBUFFERSIZE
+#	define STREAMBUFFERSIZE 24   // The length of the streambuffer  (default: 24) must be > MESSENGERBUFFERSIZE
+#endif
 
 #ifndef MESSENGERBUFFERSIZE
-#	define MESSENGERBUFFERSIZE 24   // The length of the commandbuffer  (default: 24)
+#	define MESSENGERBUFFERSIZE 10   // The length of the commandbuffer  (default: 10)
 #endif
 #ifndef CHECKSUMSIZE // for overidding
 #	define CHECKSUMSIZE         2   //
 #endif
+
+#include <SBDispatcherBase.h>
+#include <sbdevice.h>
 
 // Message States
 enum {
@@ -24,6 +42,7 @@ enum {
   kEndOfMessage,				 // Message is fully received, reached command separator
 };
 
+class SBDevice;
 /*
  * CallBack checksum function type
  */
@@ -36,37 +55,21 @@ private:
   // **** Private variables *** 
   
   bool    startCommand;            // Indicates if sending of a command is underway
-  uint8_t bufferIndex;              // Index where to write data in buffer
-  uint8_t bufferLength;             // Is set to MESSENGERBUFFERSIZE
-  uint8_t bufferLastIndex;          // The last index of the buffer
-  char CmdlastChar;                 // Bookkeeping of command escape char 
   bool pauseProcessing;             // pauses processing of new commands, during sending
-  char commandBuffer[MESSENGERBUFFERSIZE]; // Buffer that holds the data
-  uint8_t messageState;             // Current state of message processing
-  char *current;                    // Pointer to current buffer position
-  char *last;                       // Pointer to previous buffer position
+  char commandBuffer[MESSENGERBUFFERSIZE]; // Buffer command that holds the data
+  uint8_t bufferIndex;              // Index where to write data in buffer
+  char streamBuffer[STREAMBUFFERSIZE]; // Buffer command that holds the data
   Stream *comms;                    // Serial data stream
-  SBCheckSumFctType checksum;       //
+  SBCheckSumFctType checksum;       // checksum function
   char command_separator;           // Character indicating end of command (default: '\r')
-
+  SBDispatcherBase * dispatcher;    // Message Dispatcher
   // **** Initialize ****
   
   void init (Stream & comms, const char cmd_separator);
   void reset ();
   
-  // **** Command processing ****
-  
-  //inline uint8_t processLine (char serialChar) __attribute__((always_inline));
-  //inline void handleMessage() __attribute__((always_inline));
-  //inline bool blockedTillReply (unsigned long timeout = DEFAULT_TIMEOUT, int ackCmdId = 1) __attribute__((always_inline));
-  //inline bool CheckForAck (int AckCommand) __attribute__((always_inline));
+  bool checkMsgChecksum(const char * msg, int msglen);
 
-    
-  // **** Command receiving ****
-  
-  //int findNext (char *str, char delim);
-
-  
 public:
 
   // ****** Public functions ******
@@ -75,26 +78,25 @@ public:
   
   SBMessenger (Stream & comms,
 				const char cmd_separator = '\r',
-				const SBCheckSumFctType checksum= NULL);
+				SBDispatcherBase *dispatcher=NULL,
+				const SBCheckSumFctType checksum=NULL);
+
+  /**
+   * Setting devices receive message
+   */
+  void setDeviceList(SBDevice *devList);
 
   // **** Command processing ****
   
-  void feedinSerialData ();
+  void monitor (void);
   bool available ();
   bool isArgOk ();
   uint8_t CommandID ();
   
-  // ****  Command sending ****
-  
-  void send(const void * cmd, unsigned int cmdLen) {
-	  comms->write((const uint8_t *) cmd, cmdLen);
-	  if (checksum) {
-		  char cks[CHECKSUMSIZE];
-		  checksum((char * const)cmd,cmdLen,cks);
-		  comms->write((const uint8_t *)cks,CHECKSUMSIZE);
-	  }
-	  comms->write(command_separator);
-  }
+  /**
+   * Send message
+   */
+  void send(const void * cmd, unsigned int cmdLen) ;
 
 };
-#endif
+#endif // SBMESSENGER_H_
