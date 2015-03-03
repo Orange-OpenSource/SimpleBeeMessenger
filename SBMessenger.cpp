@@ -97,7 +97,7 @@ void SBMessenger::monitor(void) {
 			}
 		}
 	}
-    // Force unknown device to get an address
+    // Force unknown device to get an address, and send heartbeat message....
 	if (dispatcher) {
 		dispatcher->heartbeat();
 	}

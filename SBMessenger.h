@@ -46,7 +46,7 @@ class SBDevice;
 /*
  * CallBack checksum function type
  */
-typedef void (*SBCheckSumFctType)(char * const start, int length, char * dest);
+typedef void (*SBCheckSumFctType)(const char * start, int length, char * dest);
 
 
 class SBMessenger {
