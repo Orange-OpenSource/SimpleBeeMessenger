@@ -2,7 +2,7 @@
 Simple Bee Message Manager
 ==========================
 
-Library for Arduino_ device |Arduinologo| impementing Generic SimpleBee message manager for |OTBlogo| platform.
+Library for |Arduinologo| device impementing Generic SimpleBee message manager for |OTBlogo| platform.
         
         
 .. |OTBlogo| image:: http://openthebox.org/wp-content/uploads/2014/06/OB-Logo.png
@@ -13,10 +13,9 @@ Library for Arduino_ device |Arduinologo| impementing Generic SimpleBee message 
 
 Références
 ----------
-   * Le site arduino |Arduinologo| http://www.arduino.cc
-   * La `bibliothèque XBee pour Arduino`_
+   * Arduino http://www.arduino.cc
    * `Arduino guide pour Xbee Shield`_
-   * La bilibithèque Simple Bee pour OpenTheBox : `SimpleBee4OTB Release`_
+   * The Simple Bee for OpenTheBox library : `SimpleBee4OTB Release`_
    * `Xbee et Arduino , un tutorial <http://jeromeabel.net/ressources/xbee-arduino>`_
    
 .. _`SimpleBee4OTB Release`: https://github.com/franckOL/XbeeTuto/releases/latest
@@ -25,7 +24,7 @@ Références
 
 Requirements
 ------------
-   * |Arduinologo| IDE Arduino 1.6
+   * IDE Arduino 1.6
    * Arduino_ Uno
    * Arduino Wireless Proto Shield
    * XBee S1 digi module http://www.digi.com/products/wireless-wired-embedded-solutions/zigbee-rf-modules/xctu
@@ -33,6 +32,12 @@ Requirements
 
 Installation
 ------------
+
+Download the latest version of the library https://github.com/Orange-OpenSource/SimpleBeeMessenger/releases.
+
+In Arduino IDE, go to sketch > Import library > add library and select the downloaded zip file.
+
+In sketch > Import library, you got now SBMessenger library.
 
 
 License
