@@ -2,7 +2,7 @@
 Simple Bee Message Manager
 ==========================
 
-Library for |Arduinologo| device impementing Generic SimpleBee message manager for |OTBlogo| platform.
+Library for |Arduinologo| device implementing Generic SimpleBee message manager for |OTBlogo| platform.
         
         
 .. |OTBlogo| image:: http://openthebox.org/wp-content/uploads/2014/06/OB-Logo.png
@@ -18,7 +18,8 @@ Références
    * The Simple Bee for OpenTheBox library : `SimpleBee4OTB Release`_
    * `Xbee et Arduino , un tutorial <http://jeromeabel.net/ressources/xbee-arduino>`_
    
-.. _`SimpleBee4OTB Release`: https://github.com/franckOL/XbeeTuto/releases/latest
+.. _`SimpleBee4OTB Release`: https://github.com/Orange-OpenSource/SimpleBee4OTB/releases/latest
+.. _`SimpleBeeMessenger Release`: https://github.com/Orange-OpenSource/SimpleBeeMessenger/releases/latest
 .. _`Arduino guide pour Xbee Shield`: http://arduino.cc/en/Guide/ArduinoWirelessShield
 .. _`bibliothèque XBee pour Arduino`: https://code.google.com/p/xbee-arduino/
 
